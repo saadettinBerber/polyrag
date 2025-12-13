@@ -31,6 +31,12 @@ class AdapterFactory:
                 model=kwargs.get("model", "llama3.2"),
                 base_url=kwargs.get("base_url", "http://localhost:11434")
             )
+        elif provider.lower() == "gemini":
+            from polyrag.adapters.llm.gemini_adapter import GeminiAdapter
+            return GeminiAdapter(
+                model_name=kwargs.get("model", "gemini-2.5-pro"),
+                api_key=kwargs.get("api_key")
+            )
         else:
             raise ValueError(f"Unknown LLM provider: {provider}")
 
@@ -50,6 +56,12 @@ class AdapterFactory:
             from polyrag.adapters.embedding.fastembed_adapter import FastEmbedAdapter
             return FastEmbedAdapter(
                 model_name=kwargs.get("model_name", "BAAI/bge-small-en-v1.5")
+            )
+        elif provider.lower() == "gemini":
+            from polyrag.adapters.embedding.gemini_embedding_adapter import GeminiEmbeddingAdapter
+            return GeminiEmbeddingAdapter(
+                model_name=kwargs.get("model_name", "models/text-embedding-004"),
+                api_key=kwargs.get("api_key")
             )
         elif provider.lower() == "clip":
             from polyrag.adapters.embedding.clip_adapter import CLIPAdapter
